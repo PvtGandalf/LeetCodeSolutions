@@ -1,0 +1,64 @@
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var reorganizeString = function(s) {
+    
+    // Initialize the hash table
+    let hash = {};
+    
+    // Add all characters to the hash table with frequencies
+    for (let char of s) {
+        
+        // If the hash table already has the character added -> increment frequency
+        if (hash.hasOwnProperty(char)) {
+            hash[char] = hash[char] + 1;
+            
+        // Else set the frequency to 1
+        } else {
+            hash[char] = 1;
+        }  
+    }
+    
+    // Sort the map based on frequency into an array
+    let sortedArr = Object.keys(hash).sort((a, b) => hash[b] - hash[a]);
+    
+    // Initialize bucket and initial index
+    let bucket = [];
+    let index = 0;
+    
+    // Go through each character within the sorted array
+    for (let i = 0; i < sortedArr.length; i++) {
+        
+        // Get the frequency for the current character being checked
+        let occur = hash[sortedArr[i]];
+        
+        // If the character frequency is greater than half the length of total characters -> reorganizing is impossible
+        if (occur > parseInt((s.length + 1) / 2)) {
+            return ""
+        }
+        
+        // For frequency count
+        for (let j = 0; j < occur; j++) {
+            
+            // Begin filling in the odd indices if at the end of the string
+            if (index >= s.length) {
+                index = 1;
+            }
+            
+            // Fill the bucket with the current character
+            bucket[index] = sortedArr[i];
+            
+            // Increment the current index by 2
+            index += 2;
+        }
+        
+        // While the current character's frequency is greater than 0 -> add that character bucket 1
+        while (sortedArr[i][1] > 0) {
+            bucket.push()
+        }
+    }
+
+    // Return the bucket converted into a string
+    return bucket.join('');
+};
